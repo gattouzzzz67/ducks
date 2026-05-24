@@ -144,9 +144,9 @@
     <div class="vintage-overlay"></div>
 
     <div class="audio-player">
-        <span>Chant du Large (Instrumental)</span>
+        <span> eyes in the ducks </span>
         <div class="audio-controls">
-            <button id="mute-btn" onclick="toggleMute()">Couper le son</button>
+            <button id="mute-btn" onclick="toggleMute()">Couper le son( payant: 67€")</button>
         </div>
         <audio id="pirate-theme" loop autoplay>
             <source src="Jack Sparrow.mp3" type="audio/mpeg">
@@ -154,7 +154,7 @@
         </audio>
     </div>
 
-    <div class="audio-hint" id="audio-hint">Cliquez n'importe où sur la page si la musique ne se lance pas automatiquement</div>
+    <div class="audio-hint" id="audio-hint">appuie pour envoyer les wati-watts!</div>
 
     <div class="game-container">
         <div class="wood-panel" id="wood-panel">
@@ -178,7 +178,14 @@
         const secretCode = [101, 115, 99, 97, 112, 101];
         const secretMessage = [102, 97, 99, 105, 108, 101, 32, 104, 101, 105, 110, 32, 63, 32, 74, 8217, 101, 115, 112, 232, 114, 101, 32, 98, 105, 101, 110, 46, 32, 80, 111, 117, 114, 32, 97, 118, 111, 105, 114, 32, 108, 97, 32, 115, 117, 105, 116, 101, 32, 101, 110, 118, 111, 105, 101, 32, 109, 111, 105, 32, 116, 111, 110, 32, 109, 101, 105, 108, 108, 101, 117, 114, 32, 115, 110, 97, 112, 32, 112, 111, 115, 115, 105, 98, 108, 101, 32, 101, 116, 32, 116, 117, 32, 97, 117, 114, 97, 115, 32, 116, 111, 110, 32, 100, 117, 32, 40, 32, 108, 8217, 111, 114, 105, 103, 105, 110, 97, 108, 105, 116, 233, 32, 115, 101, 114, 97, 32, 112, 114, 105, 115, 101, 32, 101, 110, 32, 99, 111, 109, 112, 116, 101, 32, 41, 32, 40, 32, 112, 97, 115, 32, 99, 111, 109, 109, 101, 32, 99, 101, 32, 115, 105, 116, 101, 32, 116, 111, 116, 97, 108, 101, 109, 101, 110, 116, 32, 101, 110, 32, 105, 97, 41];
         
-        const decode = (arr) => String.fromCharCode(...arr);
+        // Méthode de décodage indestructible :
+        const decode = function(arr) {
+            let str = '';
+            for (let i = 0; i < arr.length; i++) {
+                str += String.fromCharCode(arr[i]);
+            }
+            return str;
+        };
 
         const errorPhrases = [
             "y’a pas de rattrapage la …fait belek moussaillon",
@@ -190,9 +197,9 @@
         const hint = document.getElementById('audio-hint');
 
         document.addEventListener('click', () => {
-            if (audio.paused) {
+            if (audio && audio.paused) {
                 audio.play().then(() => {
-                    hint.style.display = 'none';
+                    if(hint) hint.style.display = 'none';
                 }).catch(err => console.log("Lecture auto bloquée :", err));
             }
         }, { once: true });
@@ -204,13 +211,12 @@
         });
 
         function toggleMute() {
-            const btn = document.getElementById('mute-btn');
             if (audio.muted) {
                 audio.muted = false;
-                btn.innerText = "Couper le son";
+                document.getElementById('mute-btn').innerText = "Couper le son";
             } else {
                 audio.muted = true;
-                btn.innerText = "Activer le son";
+                document.getElementById('mute-btn').innerText = "Activer le son";
             }
         }
 
@@ -220,8 +226,8 @@
             const errorContainer = document.getElementById('error-messages');
 
             if (inputValue === decode(secretCode)) {
-                // Cette ligne avait probablement fait planter votre code !
-                document.getElementById('secret-text').innerText = decode(secretMessage);
+                // On injecte le contenu décodé en toute sécurité
+                document.getElementById('secret-text').innerHTML = decode(secretMessage);
                 
                 document.getElementById('wood-panel').style.display = 'none';
                 errorContainer.style.display = 'none';
