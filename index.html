@@ -5,240 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Ducks - Mystère Pirate</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            margin: 0; padding: 0; width: 100%; height: 100%;
             font-family: 'Georgia', serif;
             background-image: url('image.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            overflow: hidden;
+            background-size: cover; background-position: center;
+            background-repeat: no-repeat; overflow: hidden;
             background-color: #1a0f05;
         }
 
-        /* Overlay vintage pour renforcer l'ambiance */
         .vintage-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.4) 100%);
-            pointer-events: none;
-            z-index: 1;
+            pointer-events: none; z-index: 1;
         }
 
-        /* Lecteur Audio Custom */
         .audio-player {
-            position: absolute;
-            top: 20px;
-            left: 20px;
+            position: absolute; top: 20px; left: 20px;
             background: linear-gradient(135deg, #3d2314, #26140a);
-            border: 3px solid #8c6d3f;
-            border-radius: 8px;
-            padding: 10px 15px;
-            color: #f4eccf;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border: 3px solid #8c6d3f; border-radius: 8px;
+            padding: 10px 15px; color: #f4eccf;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6); z-index: 10;
+            display: flex; align-items: center; gap: 15px;
+            font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
         }
 
-        .audio-player span {
-            font-weight: bold;
-            text-shadow: 1px 1px 2px black;
-        }
+        .audio-player span { font-weight: bold; text-shadow: 1px 1px 2px black; }
 
         .audio-controls button {
-            background: #8c6d3f;
-            border: 1px solid #594225;
-            color: #fff;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-weight: bold;
-            transition: background 0.2s;
+            background: #8c6d3f; border: 1px solid #594225; color: #fff;
+            padding: 5px 10px; cursor: pointer; border-radius: 4px;
+            font-weight: bold; transition: background 0.2s;
         }
 
-        .audio-controls button:hover {
-            background: #a6834c;
-        }
+        .audio-controls button:hover { background: #a6834c; }
 
-        /* Zone Principale de l'interface */
         .game-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            padding: 100px 50px;
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            gap: 40px;
+            position: relative; width: 100%; height: 100%; z-index: 2;
+            padding: 100px 50px; display: flex; flex-direction: row;
+            align-items: flex-start; gap: 40px;
         }
 
-        /* Panneau en bois réaliste */
         .wood-panel {
             width: 320px;
             background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://www.transparenttextures.com/patterns/wood-pattern.png'), #5c3a21;
-            border: 12px solid #3d2314;
-            border-top-color: #4a2d19;
-            border-bottom-color: #2b170c;
-            border-radius: 4px;
-            box-shadow: 
-                inset 0 0 20px rgba(0,0,0,0.8),
-                0 10px 25px rgba(0,0,0,0.7),
-                2px 2px 0px #1a0f05;
-            padding: 30px 20px;
-            text-align: center;
-            position: relative;
+            border: 12px solid #3d2314; border-top-color: #4a2d19; border-bottom-color: #2b170c;
+            border-radius: 4px; padding: 30px 20px; text-align: center; position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 10px 25px rgba(0,0,0,0.7), 2px 2px 0px #1a0f05;
         }
 
-        /* Clous décoratifs sur le panneau */
         .wood-panel::before, .wood-panel::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #2b2b2b;
-            border-radius: 50%;
+            content: ''; position: absolute; width: 8px; height: 8px;
+            background: #2b2b2b; border-radius: 50%;
             box-shadow: inset -1px -1px 2px #000, 1px 1px 1px rgba(255,255,255,0.2);
         }
         .wood-panel::before { top: 8px; left: 8px; }
         .wood-panel::after { top: 8px; right: 8px; }
 
         .panel-title {
-            color: #d9b48f;
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 25px;
-            text-shadow: 2px 2px 4px #000;
-            border-bottom: 2px dashed #3d2314;
-            padding-bottom: 10px;
+            color: #d9b48f; font-size: 24px; font-weight: bold;
+            letter-spacing: 2px; margin-bottom: 25px; text-shadow: 2px 2px 4px #000;
+            border-bottom: 2px dashed #3d2314; padding-bottom: 10px;
         }
 
-        .input-group {
-            margin-bottom: 20px;
-        }
+        .input-group { margin-bottom: 20px; }
 
         .pirate-input {
-            width: 100%;
-            padding: 12px;
-            background: #f4eccf;
-            border: 2px solid #3d2314;
-            border-radius: 4px;
-            font-size: 16px;
-            font-family: 'Georgia', serif;
-            color: #26140a;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-            text-align: center;
-            outline: none;
+            width: 100%; padding: 12px; background: #f4eccf; border: 2px solid #3d2314;
+            border-radius: 4px; font-size: 16px; font-family: 'Georgia', serif;
+            color: #26140a; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+            text-align: center; outline: none;
         }
 
-        .pirate-input:focus {
-            border-color: #8c6d3f;
-            background: #fffbef;
-        }
+        .pirate-input:focus { border-color: #8c6d3f; background: #fffbef; }
 
         .pirate-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(#cd9a62, #966738);
-            border: 2px solid #3d2314;
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            border-radius: 4px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transition: all 0.1s;
+            width: 100%; padding: 12px; background: linear-gradient(#cd9a62, #966738);
+            border: 2px solid #3d2314; color: #fff; font-size: 16px;
+            font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer; border-radius: 4px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: all 0.1s;
         }
 
-        .pirate-btn:hover {
-            background: linear-gradient(#dba972, #a67544);
-        }
+        .pirate-btn:hover { background: linear-gradient(#dba972, #a67544); }
+        .pirate-btn:active { transform: translateY(2px); box-shadow: 0 2px 3px rgba(0,0,0,0.3); }
 
-        .pirate-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 3px rgba(0,0,0,0.3);
-        }
-
-        /* Conteneur des messages d'erreur à droite du panneau */
         .error-container {
-            max-width: 450px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            padding-top: 20px;
+            max-width: 450px; display: flex; flex-direction: column; gap: 15px; padding-top: 20px;
         }
 
         .error-text {
-            color: #ff3b30;
-            font-size: 18px;
-            font-weight: bold;
+            color: #ff3b30; font-size: 18px; font-weight: bold;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9), 0 0 5px rgba(0,0,0,0.5);
-            background: rgba(0, 0, 0, 0.6);
-            padding: 10px 15px;
-            border-left: 4px solid #ff3b30;
-            border-radius: 0 4px 4px 0;
-            margin: 0;
-            animation: fadeIn 0.4s ease-out forwards;
+            background: rgba(0, 0, 0, 0.6); padding: 10px 15px;
+            border-left: 4px solid #ff3b30; border-radius: 0 4px 4px 0;
+            margin: 0; animation: fadeIn 0.4s ease-out forwards;
         }
 
-        /* Parchemin de réussite (masqué par défaut) */
         .parchment-container {
-            display: none;
-            position: absolute;
-            top: 100px;
-            left: 50px;
-            width: 500px;
-            background: #ebdcb9;
-            background-image: url('https://www.transparenttextures.com/patterns/lined-paper-2.png');
-            border: 1px solid #c2b08a;
-            border-radius: 4px;
-            box-shadow: 
-                0 0 0 8px #ebdcb9,
-                0 0 0 10px #7a6844,
-                0 15px 30px rgba(0,0,0,0.6);
-            padding: 40px;
-            transform: rotate(-1deg);
-            animation: unfold 0.6s ease-out forwards;
+            display: none; position: absolute; top: 100px; left: 50px; width: 500px;
+            background: #ebdcb9; background-image: url('https://www.transparenttextures.com/patterns/lined-paper-2.png');
+            border: 1px solid #c2b08a; border-radius: 4px;
+            box-shadow: 0 0 0 8px #ebdcb9, 0 0 0 10px #7a6844, 0 15px 30px rgba(0,0,0,0.6);
+            padding: 40px; transform: rotate(-1deg); animation: unfold 0.6s ease-out forwards;
         }
 
-        /* Effet de bordure brûlée / usée pour le parchemin */
         .parchment-container::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            box-shadow: inset 0 0 30px rgba(92, 58, 33, 0.4);
-            pointer-events: none;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 0 0 30px rgba(92, 58, 33, 0.4); pointer-events: none;
         }
 
         .parchment-text {
             font-family: 'Brush Script MT', 'Courier New', cursive;
-            font-size: 22px;
-            line-height: 1.6;
-            color: #2b170c;
-            text-align: center;
-            margin: 0;
+            font-size: 22px; line-height: 1.6; color: #2b170c; text-align: center; margin: 0;
         }
 
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateX(-10px); }
             to { opacity: 1; transform: translateX(0); }
@@ -249,19 +132,10 @@
             to { opacity: 1; transform: scaleY(1) rotate(-1deg); }
         }
 
-        /* Indication d'interaction pour l'audio au premier clic */
         .audio-hint {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.7);
-            color: #f4eccf;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            z-index: 100;
-            pointer-events: none;
-            border: 1px solid #8c6d3f;
+            position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7);
+            color: #f4eccf; padding: 8px 12px; border-radius: 4px;
+            font-size: 12px; z-index: 100; pointer-events: none; border: 1px solid #8c6d3f;
         }
     </style>
 </head>
@@ -269,24 +143,20 @@
 
     <div class="vintage-overlay"></div>
 
-    <!-- Lecteur Audio Customisé -->
     <div class="audio-player">
         <span>Chant du Large (Instrumental)</span>
         <div class="audio-controls">
             <button id="mute-btn" onclick="toggleMute()">Couper le son</button>
         </div>
-        <!-- Source audio modifiable. Remplacer par un fichier local ou un lien direct valide -->
         <audio id="pirate-theme" loop autoplay>
             <source src="Jack Sparrow.mp3" type="audio/mpeg">
             Votre navigateur ne supporte pas l'élément audio.
         </audio>
     </div>
 
-    <div class="audio-hint" id="audio-hint">appuie pour envoyer les watts !</div>
+    <div class="audio-hint" id="audio-hint">Cliquez n'importe où sur la page si la musique ne se lance pas automatiquement</div>
 
     <div class="game-container">
-        
-        <!-- Panneau de saisie -->
         <div class="wood-panel" id="wood-panel">
             <div class="panel-title">CODE DUCKS</div>
             <div class="input-group">
@@ -295,26 +165,19 @@
             <button class="pirate-btn" onclick="checkPassword()">Valider</button>
         </div>
 
-        <!-- Zone des messages d'erreur -->
         <div class="error-container" id="error-messages"></div>
 
-        <!-- Parchemin de réussite -->
-      <div class="parchment-container" id="parchment">
+        <div class="parchment-container" id="parchment">
             <p class="parchment-text" id="secret-text"></p>
         </div>
-
     </div>
 
     <script>
         let errorCount = 0;
         
-        // Le mot de passe "escape" converti en codes numériques
         const secretCode = [101, 115, 99, 97, 112, 101];
-        
-        // Le texte du parchemin converti en codes numériques
         const secretMessage = [102, 97, 99, 105, 108, 101, 32, 104, 101, 105, 110, 32, 63, 32, 74, 8217, 101, 115, 112, 232, 114, 101, 32, 98, 105, 101, 110, 46, 32, 80, 111, 117, 114, 32, 97, 118, 111, 105, 114, 32, 108, 97, 32, 115, 117, 105, 116, 101, 32, 101, 110, 118, 111, 105, 101, 32, 109, 111, 105, 32, 116, 111, 110, 32, 109, 101, 105, 108, 108, 101, 117, 114, 32, 115, 110, 97, 112, 32, 112, 111, 115, 115, 105, 98, 108, 101, 32, 101, 116, 32, 116, 117, 32, 97, 117, 114, 97, 115, 32, 116, 111, 110, 32, 100, 117, 32, 40, 32, 108, 8217, 111, 114, 105, 103, 105, 110, 97, 108, 105, 116, 233, 32, 115, 101, 114, 97, 32, 112, 114, 105, 115, 101, 32, 101, 110, 32, 99, 111, 109, 112, 116, 101, 32, 41, 32, 40, 32, 112, 97, 115, 32, 99, 111, 109, 109, 101, 32, 99, 101, 32, 115, 105, 116, 101, 32, 116, 111, 116, 97, 108, 101, 109, 101, 110, 116, 32, 101, 110, 32, 105, 97, 41];
         
-        // Fonction qui retransforme les chiffres en texte
         const decode = (arr) => String.fromCharCode(...arr);
 
         const errorPhrases = [
@@ -322,10 +185,10 @@
             "t’es vraiment nul on dirait Eudes dans la vie de tous les jours ..",
             "saison blanche ? TOI ? oui. Tu n’es donc pas digne de la ducks familly"
         ];
-        
+
+        const audio = document.getElementById('pirate-theme');
         const hint = document.getElementById('audio-hint');
 
-        // Gestion de l'autoplay bloqué par les navigateurs : lance l'audio au premier clic sur la page
         document.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play().then(() => {
@@ -334,7 +197,6 @@
             }
         }, { once: true });
 
-        // Ecouter la touche Entrée pour valider le mot de passe
         document.getElementById('password-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 checkPassword();
@@ -352,22 +214,19 @@
             }
         }
 
-       function checkPassword() {
+        function checkPassword() {
             const inputField = document.getElementById('password-input');
             const inputValue = inputField.value.trim().toLowerCase();
             const errorContainer = document.getElementById('error-messages');
 
-            // On compare la saisie avec le code décodé
             if (inputValue === decode(secretCode)) {
-                
-                // On injecte le texte secret décodé dans le HTML uniquement en cas de réussite
+                // Cette ligne avait probablement fait planter votre code !
                 document.getElementById('secret-text').innerText = decode(secretMessage);
                 
                 document.getElementById('wood-panel').style.display = 'none';
                 errorContainer.style.display = 'none';
                 document.getElementById('parchment').style.display = 'block';
             } else {
-                // Échec : Affichage progressif des erreurs
                 if (errorCount < errorPhrases.length) {
                     const errorParagraph = document.createElement('p');
                     errorParagraph.className = 'error-text';
@@ -375,19 +234,16 @@
                     errorContainer.appendChild(errorParagraph);
                     errorCount++;
                 } else {
-                    // Si on dépasse le nombre de fautes, on secoue le panneau ou réaffiche un avertissement alternatif
                     const alertParagraph = document.createElement('p');
                     alertParagraph.className = 'error-text';
                     alertParagraph.style.borderColor = '#ffcc00';
                     alertParagraph.style.color = '#ffcc00';
                     alertParagraph.innerText = "Le kraken t'a emporté... Rafraîchis la page pour retenter ta chance !";
                     
-                    // Évite d'accumuler à l'infini les messages de fin
                     if (errorContainer.children.length <= errorPhrases.length) {
                         errorContainer.appendChild(alertParagraph);
                     }
                 }
-                // Réinitialise le champ pour la tentative suivante
                 inputField.value = '';
                 inputField.focus();
             }
