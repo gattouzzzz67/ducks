@@ -307,15 +307,22 @@
 
     <script>
         let errorCount = 0;
-        const correctPassword = "escape";
         
+        // Le mot de passe "escape" converti en codes numériques
+        const secretCode = [101, 115, 99, 97, 112, 101];
+        
+        // Le texte du parchemin converti en codes numériques
+        const secretMessage = [102, 97, 99, 105, 108, 101, 32, 104, 101, 105, 110, 32, 63, 32, 74, 8217, 101, 115, 112, 232, 114, 101, 32, 98, 105, 101, 110, 46, 32, 80, 111, 117, 114, 32, 97, 118, 111, 105, 114, 32, 108, 97, 32, 115, 117, 105, 116, 101, 32, 101, 110, 118, 111, 105, 101, 32, 109, 111, 105, 32, 116, 111, 110, 32, 109, 101, 105, 108, 108, 101, 117, 114, 32, 115, 110, 97, 112, 32, 112, 111, 115, 115, 105, 98, 108, 101, 32, 101, 116, 32, 116, 117, 32, 97, 117, 114, 97, 115, 32, 116, 111, 110, 32, 100, 117, 32, 40, 32, 108, 8217, 111, 114, 105, 103, 105, 110, 97, 108, 105, 116, 233, 32, 115, 101, 114, 97, 32, 112, 114, 105, 115, 101, 32, 101, 110, 32, 99, 111, 109, 112, 116, 101, 32, 41, 32, 40, 32, 112, 97, 115, 32, 99, 111, 109, 109, 101, 32, 99, 101, 32, 115, 105, 116, 101, 32, 116, 111, 116, 97, 108, 101, 109, 101, 110, 116, 32, 101, 110, 32, 105, 97, 41];
+        
+        // Fonction qui retransforme les chiffres en texte
+        const decode = (arr) => String.fromCharCode(...arr);
+
         const errorPhrases = [
             "y’a pas de rattrapage la …fait belek moussaillon",
             "t’es vraiment nul on dirait Eudes dans la vie de tous les jours ..",
             "saison blanche ? TOI ? oui. Tu n’es donc pas digne de la ducks familly"
         ];
-
-        const audio = document.getElementById('pirate-theme');
+        
         const hint = document.getElementById('audio-hint');
 
         // Gestion de l'autoplay bloqué par les navigateurs : lance l'audio au premier clic sur la page
@@ -345,13 +352,17 @@
             }
         }
 
-        function checkPassword() {
+       function checkPassword() {
             const inputField = document.getElementById('password-input');
             const inputValue = inputField.value.trim().toLowerCase();
             const errorContainer = document.getElementById('error-messages');
 
-            if (inputValue === correctPassword) {
-                // Succès : Masquage du panneau et des erreurs, affichage du parchemin
+            // On compare la saisie avec le code décodé
+            if (inputValue === decode(secretCode)) {
+                
+                // On injecte le texte secret décodé dans le HTML uniquement en cas de réussite
+                document.getElementById('secret-text').innerText = decode(secretMessage);
+                
                 document.getElementById('wood-panel').style.display = 'none';
                 errorContainer.style.display = 'none';
                 document.getElementById('parchment').style.display = 'block';
